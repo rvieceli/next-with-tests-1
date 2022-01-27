@@ -1,7 +1,7 @@
 import { query } from 'faunadb';
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
-import { fauna } from 'services/fauna';
+import { fauna } from 'app/services/fauna';
 
 export default NextAuth({
   providers: [

@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse, NextConfig } from "next";
-import Stripe from "stripe";
+import { NextApiRequest, NextApiResponse, NextConfig } from 'next';
+import Stripe from 'stripe';
 
-import { createSubscription } from "services/stripe/createSubscription";
-import { updateSubscription } from "services/stripe/updateSubscription";
-import { stripe } from "services/stripe";
-import { buffer } from "utils/buffer";
+import { createSubscription } from 'app/services/stripe/createSubscription';
+import { updateSubscription } from 'app/services/stripe/updateSubscription';
+import { stripe } from 'app/services/stripe';
+import { buffer } from 'utils/buffer';
 
 type EventHandler = (
   event: Stripe.Event,
@@ -13,19 +13,19 @@ type EventHandler = (
 ) => Promise<void>;
 
 const mappedEvents: Record<string, EventHandler> = {
-  "customer.subscription.created": createSubscription,
-  "customer.subscription.updated": updateSubscription,
-  "customer.subscription.deleted": updateSubscription,
+  'customer.subscription.created': createSubscription,
+  'customer.subscription.updated': updateSubscription,
+  'customer.subscription.deleted': updateSubscription,
 };
 
 const webhooks = async (request: NextApiRequest, response: NextApiResponse) => {
-  if (request.method !== "POST") {
-    response.setHeader("Allow", "POST");
-    response.status(405).end("Method not allowed");
+  if (request.method !== 'POST') {
+    response.setHeader('Allow', 'POST');
+    response.status(405).end('Method not allowed');
     return;
   }
 
-  const signature = request.headers["stripe-signature"] as string;
+  const signature = request.headers['stripe-signature'] as string;
 
   const body = await buffer(request);
 
@@ -40,7 +40,7 @@ const webhooks = async (request: NextApiRequest, response: NextApiResponse) => {
   if (eventHandler) {
     try {
       await eventHandler(event, request, response);
-      response.status(200).json({ message: "Event successfully processed" });
+      response.status(200).json({ message: 'Event successfully processed' });
     } catch (e) {
       // TODO: manage the error properly
       console.log(`${event.type} error`, e);
@@ -48,7 +48,7 @@ const webhooks = async (request: NextApiRequest, response: NextApiResponse) => {
     }
   } else {
     // TODO: manage a warning properly
-    response.status(200).json({ message: "Unhandled event" });
+    response.status(200).json({ message: 'Unhandled event' });
   }
 };
 

@@ -1,14 +1,10 @@
 import { useRouter } from 'next/router';
-import { api } from 'services/api';
-import { useSession, signIn } from 'services/nextAuth';
-import { getStripeJs } from 'services/stripe-js';
+import { api } from 'app/services/api';
+import { useSession, signIn } from 'app/services/nextAuth';
+import { getStripeJs } from 'app/services/stripe-js';
 import styles from './SubscribeButton.module.scss';
 
-interface SubscribeButtonProps {
-  priceId: string;
-}
-
-const SubscribeButton = ({ priceId }: SubscribeButtonProps) => {
+const SubscribeButton = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -38,6 +34,7 @@ const SubscribeButton = ({ priceId }: SubscribeButtonProps) => {
 
   return (
     <button
+      data-testid="SubscribeNow-button"
       type="button"
       className={styles.container}
       onClick={handleSubscribe}

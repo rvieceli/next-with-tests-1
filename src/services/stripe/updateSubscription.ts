@@ -1,6 +1,6 @@
-import Stripe from "stripe";
-import { EventHandler } from "pages/api/webhooks";
-import * as fauna from "services/fauna";
+import Stripe from 'stripe';
+import { EventHandler } from 'pages/api/webhooks';
+import * as fauna from 'app/services/fauna';
 
 const updateSubscription: EventHandler = async (event) => {
   const subscription = event.data.object as Stripe.Subscription;

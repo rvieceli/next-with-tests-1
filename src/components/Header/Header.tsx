@@ -1,8 +1,8 @@
-import Image from "next/image";
+import Image from 'next/image';
 
-import { ActiveLink, SignInButton } from "components";
+import { ActiveLink, SignInButton } from 'app/components';
 
-import styles from "./Header.module.scss";
+import styles from './Header.module.scss';
 
 const Header = () => {
   return (
@@ -15,15 +15,11 @@ const Header = () => {
           height={30.47}
         />
         <nav>
-          <ActiveLink href="/" activeClassName={styles.active} >
-            <a>
-              Home
-            </a>
+          <ActiveLink href="/" activeClassName={styles.active}>
+            <a>Home</a>
           </ActiveLink>
-          <ActiveLink href="/posts" activeClassName={styles.active} >
-            <a>
-              Posts
-            </a>
+          <ActiveLink href="/posts" activeClassName={styles.active}>
+            <a>Posts</a>
           </ActiveLink>
         </nav>
         <SignInButton />

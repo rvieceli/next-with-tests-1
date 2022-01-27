@@ -1,13 +1,13 @@
-import { FaGithub } from "react-icons/fa";
-import { FiX } from "react-icons/fi";
-import { signIn, signOut, useSession } from "services/nextAuth";
+import { FaGithub } from 'react-icons/fa';
+import { FiX } from 'react-icons/fi';
+import { signIn, signOut, useSession } from 'app/services/nextAuth';
 
-import styles from "./SignInButton.module.scss";
+import styles from './SignInButton.module.scss';
 
 const SignInButton = () => {
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return null;
   }
 

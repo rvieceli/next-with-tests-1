@@ -1,22 +1,21 @@
-import Head from "next/head";
-import Image from "next/image";
-import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
+import Head from 'next/head';
+import Image from 'next/image';
+import type { GetServerSideProps, GetStaticProps, NextPage } from 'next';
 
-import styles from "./home.module.scss";
+import styles from './home.module.scss';
 
-import { SubscribeButton } from "components";
-import { stripe } from "services/stripe";
+import { SubscribeButton } from 'app/components';
+import { stripe } from 'app/services/stripe';
 
 interface HomeProps {
   product: {
-    priceId: string;
     amount: number;
     currency: string;
   };
 }
 
 const Home: NextPage<HomeProps> = ({ product }) => {
-  const { amount, currency, priceId } = product;
+  const { amount, currency } = product;
 
   return (
     <>
@@ -33,16 +32,16 @@ const Home: NextPage<HomeProps> = ({ product }) => {
           <p>
             Get access to all the publications <br />
             <span>
-              for{" "}
+              for{' '}
               {Intl.NumberFormat(undefined, {
-                style: "currency",
+                style: 'currency',
                 currency,
-              }).format(amount)}{" "}
+              }).format(amount)}{' '}
               per month
             </span>
           </p>
 
-          <SubscribeButton priceId={priceId} />
+          <SubscribeButton />
         </section>
         <Image
           src="/images/avatar.svg"
@@ -61,7 +60,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const price = await stripe.prices.retrieve(priceId);
 
   const product = {
-    priceId,
     amount: price.unit_amount! / 100,
     currency: price.currency,
   };
