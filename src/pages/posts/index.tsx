@@ -9,14 +9,14 @@ import styles from './posts.module.scss';
 
 const PAGE_SIZE = 10;
 
-type Post = {
+export type Post = {
   slug: string;
   publication_date: string;
   title: string;
   content: string;
 };
 
-interface PostsProps {
+export interface PostsProps {
   posts: Post[];
 }
 
@@ -42,7 +42,7 @@ const Posts = function ({ posts }: PostsProps) {
         <div className={styles.post}>
           {posts?.map((post) => (
             <Link key={post.slug} href={path(post.slug)}>
-              <a>
+              <a data-testid="Post-link">
                 <time>
                   {DateParser(post.publication_date).toLocaleDateString(
                     undefined,
@@ -61,7 +61,7 @@ const Posts = function ({ posts }: PostsProps) {
   );
 };
 
-interface PrismicPost {
+export interface PrismicPost {
   title: RichTextBlock[];
   content: RichTextBlock[];
 }
