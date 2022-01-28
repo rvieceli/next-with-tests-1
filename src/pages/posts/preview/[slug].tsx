@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import { useSession } from 'services/nextAuth';
+import { useSession } from 'app/services/nextAuth';
 import Head from 'next/head';
 import { RichText, RichTextBlock } from 'prismic-reactjs';
-import { getPrismicClient } from 'services/prismic';
-import { Preview } from 'feature/Post/Preview';
+import { getPrismicClient } from 'app/services/prismic';
+import { Preview } from 'app/feature/Post/Preview';
 
 const REVALIDATE = 60 * 30; // 30 minutes
 

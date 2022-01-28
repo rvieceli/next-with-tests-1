@@ -2,8 +2,8 @@ import { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import { RichText, RichTextBlock } from 'prismic-reactjs';
-import { getPrismicClient } from 'services/prismic';
-import { Post } from 'feature/Post/Post';
+import { getPrismicClient } from 'app/services/prismic';
+import { Post } from 'app/feature/Post/Post';
 
 type PostData = {
   slug: string;

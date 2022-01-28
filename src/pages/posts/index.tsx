@@ -3,8 +3,8 @@ import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { RichText, Date as DateParser, RichTextBlock } from 'prismic-reactjs';
-import { getPrismicClient, Prismic } from 'services/prismic';
-import { useSession } from 'services/nextAuth';
+import { getPrismicClient, Prismic } from 'app/services/prismic';
+import { useSession } from 'app/services/nextAuth';
 import styles from './posts.module.scss';
 
 const PAGE_SIZE = 10;

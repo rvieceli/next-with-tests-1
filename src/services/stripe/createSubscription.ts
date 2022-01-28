@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { EventHandler } from 'pages/api/webhooks';
+import { EventHandler } from 'app/pages/api/webhooks';
 import * as fauna from 'app/services/fauna';
 
 const createSubscription: EventHandler = async (event) => {
