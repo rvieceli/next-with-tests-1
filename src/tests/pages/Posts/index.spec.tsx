@@ -1,10 +1,13 @@
 import { render, screen } from '@testing-library/react';
+import { mocked } from 'jest-mock';
+
+import type { GetStaticPropsResult } from 'next';
+
 import { useSession } from 'next-auth/react';
+
 import PostsPage, { getStaticProps } from 'app/pages/posts/index';
 import type { PrismicPost, PostsProps, Post } from 'app/pages/posts/index';
-
 import { getPrismicClient } from 'app/services/prismic';
-import { mocked } from 'jest-mock';
 
 jest.mock('next-auth/react');
 jest.mock('app/services/prismic');
@@ -24,7 +27,7 @@ const posts: Post[] = [
   },
 ];
 
-describe('Home page', () => {
+describe('Posts page', () => {
   it('renders', async () => {
     mocked(useSession).mockReturnValueOnce({
       data: null,
@@ -87,7 +90,7 @@ describe('Home page', () => {
     const response = await getStaticProps({});
 
     expect(response).toEqual(
-      expect.objectContaining<{ props: PostsProps }>({
+      expect.objectContaining<GetStaticPropsResult<PostsProps>>({
         props: {
           posts: [
             {

@@ -10,4 +10,14 @@ module.exports = {
     '^app/(.*)$': '<rootDir>/src/$1',
     '\\.(css|scss|sass)$': 'identity-obj-proxy',
   },
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/pages/_app.tsx',
+    '!src/pages/_document.tsx',
+    '!src/services/**',
+    '!src/**/*.spec.{ts,tsx}',
+    '!**/node_modules/**',
+  ],
+  coverageReporters: ['lcov', 'json'],
 };

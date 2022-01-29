@@ -8,15 +8,16 @@ import { getPrismicClient } from 'app/services/prismic';
 import { Preview } from 'app/feature/Post/Preview';
 
 const REVALIDATE = 60 * 30; // 30 minutes
+export const CONTENT_LIMIT = 3;
 
-type PostData = {
+export type PostData = {
   slug: string;
   publication_date: string;
   title: string;
   content: RichTextBlock[];
 };
 
-interface PostPreviewProps {
+export interface PostPreviewProps {
   post: PostData;
 }
 
@@ -40,26 +41,26 @@ const PostPreviewPage = ({ post }: PostPreviewProps) => {
   );
 };
 
-interface PrismicPost {
+export interface PrismicPost {
   title: RichTextBlock[];
   content: RichTextBlock[];
 }
 
-const getStaticPaths: GetStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = () => {
   return {
     paths: [],
     fallback: 'blocking',
   };
 };
 
-const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = String(params?.slug);
 
   const prismic = getPrismicClient();
 
   const response = await prismic.getByUID<PrismicPost>('posts', slug, {});
 
-  const limitedContent = response.data.content.slice(0, 3);
+  const limitedContent = response.data.content.slice(0, CONTENT_LIMIT);
 
   const post: PostData = {
     slug,
@@ -77,5 +78,3 @@ const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export default PostPreviewPage;
-
-export { getStaticProps, getStaticPaths };

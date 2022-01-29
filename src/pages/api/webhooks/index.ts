@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 import { createSubscription } from 'app/services/stripe/createSubscription';
 import { updateSubscription } from 'app/services/stripe/updateSubscription';
 import { stripe } from 'app/services/stripe';
-import { buffer } from 'utils/buffer';
+import { buffer } from 'app/utils/buffer';
 
 type EventHandler = (
   event: Stripe.Event,

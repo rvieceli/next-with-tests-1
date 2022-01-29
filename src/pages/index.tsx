@@ -7,7 +7,7 @@ import styles from './home.module.scss';
 import { SubscribeButton } from 'app/components';
 import { stripe } from 'app/services/stripe';
 
-interface HomeProps {
+export interface HomeProps {
   product: {
     amount: number;
     currency: string;
@@ -54,7 +54,7 @@ const Home: NextPage<HomeProps> = ({ product }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const priceId = process.env.STRIPE_PRICE_ID;
 
   const price = await stripe.prices.retrieve(priceId);

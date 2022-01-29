@@ -1,9 +1,11 @@
 import { render, screen } from '@testing-library/react';
 
 import HomePage, { getStaticProps } from 'app/pages/index';
+import type { HomeProps } from 'app/pages/index';
 
 import { stripe } from 'app/services/stripe';
 import { mocked } from 'jest-mock';
+import { GetStaticPropsResult } from 'next';
 
 jest.mock('next-auth/react', () => ({
   useSession: () => ({
@@ -31,7 +33,7 @@ describe('Home page', () => {
     const response = await getStaticProps({});
 
     expect(response).toEqual(
-      expect.objectContaining({
+      expect.objectContaining<GetStaticPropsResult<HomeProps>>({
         props: {
           product: {
             amount: 9.9,

@@ -5,14 +5,14 @@ import { RichText, RichTextBlock } from 'prismic-reactjs';
 import { getPrismicClient } from 'app/services/prismic';
 import { Post } from 'app/feature/Post/Post';
 
-type PostData = {
+export type PostData = {
   slug: string;
   publication_date: string;
   title: string;
   content: RichTextBlock[];
 };
 
-interface PostProps {
+export interface PostProps {
   post: PostData;
 }
 
@@ -27,7 +27,7 @@ const PostPage = ({ post }: PostProps) => {
   );
 };
 
-interface PrismicPost {
+export interface PrismicPost {
   title: RichTextBlock[];
   content: RichTextBlock[];
 }
