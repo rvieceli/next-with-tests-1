@@ -1,13 +1,15 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { mocked } from 'jest-mock';
-import { useSession } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 
 import { SignInButton } from './SignInButton';
+
+import { signOut } from 'app/services/nextAuth';
 
 jest.mock('next-auth/react');
 
 describe('SignInButton component', () => {
-  it('should render SignIn when unauthenticated', () => {
+  it('renders SignIn when unauthenticated', () => {
     const useSessionMocked = mocked(useSession);
     useSessionMocked.mockReturnValueOnce({
       data: null,
@@ -16,10 +18,18 @@ describe('SignInButton component', () => {
 
     render(<SignInButton />);
 
-    expect(screen.getByText('SignIn with GitHub')).toBeInTheDocument();
+    const button = screen.getByRole('button', {
+      name: /signin with github/i,
+    });
+
+    expect(button).toBeInTheDocument();
+
+    fireEvent.click(button);
+
+    expect(mocked(signIn)).toHaveBeenCalledWith('github');
   });
 
-  it("should render user's name when authenticated", () => {
+  it("renders user's name when authenticated", () => {
     const usersName = 'Some Name';
 
     mocked(useSession).mockReturnValueOnce({
@@ -33,10 +43,18 @@ describe('SignInButton component', () => {
 
     render(<SignInButton />);
 
-    expect(screen.getByText(usersName)).toBeInTheDocument();
+    const button = screen.getByRole('button', {
+      name: new RegExp(usersName, 'i'),
+    });
+
+    expect(button).toBeInTheDocument();
+
+    fireEvent.click(button);
+
+    expect(mocked(signOut)).toHaveBeenCalled();
   });
 
-  it('should not render anything when loading', () => {
+  it('render anything when is loading', () => {
     mocked(useSession).mockReturnValueOnce({
       data: null,
       status: 'loading',
